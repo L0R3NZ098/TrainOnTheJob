@@ -1,4 +1,4 @@
-package com.example.biblio.controller;
+	package com.example.biblio.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.biblio.model.Book;
+import com.example.biblio.model.User;
 import com.example.biblio.service.BookService;
 
 @RestController
@@ -51,9 +52,9 @@ public class BookController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PutMapping("/tolend/{id}")
-	public ResponseEntity<?> lendBook(@PathVariable(value = "id") Long id) {
-		service.lendBook(id);
+	@PutMapping("/tolend/{id}/{user}")
+	public ResponseEntity<?> lendBook(@PathVariable(value = "id") Long id, @PathVariable(value = "user") User user) {
+		service.lendBook(id, user);
 		return ResponseEntity.ok().build();
 	}
 	

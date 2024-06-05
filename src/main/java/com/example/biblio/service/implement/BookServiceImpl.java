@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.biblio.enums.StateEnum;
 import com.example.biblio.model.Book;
+import com.example.biblio.model.User;
 import com.example.biblio.repository.BookRepository;
 import com.example.biblio.service.BookService;
 
@@ -41,7 +42,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void updateBook(Long id, Book book) {
 		Book update = this.getBookById(id);
-		BeanUtils.copyProperties(book, update);
+		BeanUtils.copyProperties(book, update, "id");;
 		repository.save(update);
 	}
 
@@ -51,10 +52,12 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void lendBook(Long id) {
+	public void lendBook(Long id, User user) {
 		Book land = this.getBookById(id);
 		if (land.getStato().equals(StateEnum.DISPONIBILE)) {
 			land.setStato(StateEnum.PRESTATO);
+			land.setUser(user);
+			repository.save(land);
 		}
 	}
 
@@ -63,6 +66,8 @@ public class BookServiceImpl implements BookService {
 		Book land = this.getBookById(id);
 		if (land.getStato().equals(StateEnum.PRESTATO)) {
 			land.setStato(StateEnum.DISPONIBILE);
+			land.setUser(null);
+			repository.save(land);
 		}
 	}
 
