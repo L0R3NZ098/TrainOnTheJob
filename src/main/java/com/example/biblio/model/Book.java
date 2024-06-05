@@ -2,7 +2,6 @@ package com.example.biblio.model;
 
 import com.example.biblio.enums.StateEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

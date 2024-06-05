@@ -54,7 +54,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void lendBook(Long id, User user) {
 		Book land = this.getBookById(id);
-		if (land.getStato().equals(StateEnum.DISPONIBILE)) {
+		if (land.getStato().equals(StateEnum.DISPONIBILE) && user.getLibri().size() < 3) {
 			land.setStato(StateEnum.PRESTATO);
 			land.setUser(user);
 			repository.save(land);
