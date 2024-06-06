@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.biblio.enums.StateEnum;
+import com.example.biblio.exception.LimitException;
 import com.example.biblio.model.Book;
 import com.example.biblio.model.User;
 import com.example.biblio.repository.BookRepository;
@@ -58,6 +59,8 @@ public class BookServiceImpl implements BookService {
 			land.setStato(StateEnum.PRESTATO);
 			land.setUser(user);
 			repository.save(land);
+		} else {
+			throw new LimitException("Superato il limite di libri in prestito");
 		}
 	}
 
