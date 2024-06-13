@@ -33,10 +33,8 @@ public class BookControllerTest {
 	@Order(1)
 	public void createBook() throws Exception {
 
-		// Mock del libro
 		Book mockBook = new Book(null, "TitoloProva", "AutoreProva", 2000, StateEnum.DISPONIBILE, null);
 
-		// Richiesta Post
 		mvc.perform(MockMvcRequestBuilders.post("/book/create").contentType(MediaType.APPLICATION_JSON)
 				.content(obj.writeValueAsString(mockBook))).andExpect(MockMvcResultMatchers.status().isOk());
 
@@ -65,15 +63,10 @@ public class BookControllerTest {
 	@Order(4)
 	public void updateBook() throws Exception {
 
-		Book mockBook = new Book(null, "TitoloProva", "AutoreProva", 2000, StateEnum.DISPONIBILE, null);
-
-		mockBook.setTitolo("TitoloAggiornato");
-		mockBook.setAutore("AutoreAggiornato");
-		mockBook.setAge(2010);
-		mockBook.setStato(StateEnum.PRESTATO);
+		Book updateBook = new Book(null, "TitoloAggiornato", "AutoreAggiorato", 2010, StateEnum.PRESTATO, null);
 
 		mvc.perform(MockMvcRequestBuilders.put("/book/update/{id}", 1).contentType(MediaType.APPLICATION_JSON)
-				.content(obj.writeValueAsString(mockBook))).andExpect(MockMvcResultMatchers.status().isOk());
+				.content(obj.writeValueAsString(updateBook))).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	@Test
