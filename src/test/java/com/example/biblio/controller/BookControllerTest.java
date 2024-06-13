@@ -47,7 +47,7 @@ public class BookControllerTest {
 	public void getById() throws Exception {
 
 		mvc.perform(MockMvcRequestBuilders.get("/book/getbyid/{id}", 1).accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk());
+				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
 
 	}
 
@@ -55,22 +55,34 @@ public class BookControllerTest {
 	@Order(3)
 	public void getAll() throws Exception {
 
-		mvc.perform(MockMvcRequestBuilders.get("/book/getall").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
+		mvc.perform(MockMvcRequestBuilders.get("/book/getall").accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").isNotEmpty()).andReturn();
 
 	}
-	
+
 	@Test
 	@Order(4)
 	public void updateBook() throws Exception {
-		//implementare metodo put
+
+		Book mockBook = new Book(null, "TitoloProva", "AutoreProva", 2000, StateEnum.DISPONIBILE, null);
+
+		mockBook.setTitolo("TitoloAggiornato");
+		mockBook.setAutore("AutoreAggiornato");
+		mockBook.setAge(2010);
+		mockBook.setStato(StateEnum.PRESTATO);
+
+		mvc.perform(MockMvcRequestBuilders.put("/book/update/{id}", 1).contentType(MediaType.APPLICATION_JSON)
+				.content(obj.writeValueAsString(mockBook))).andExpect(MockMvcResultMatchers.status().isOk());
 	}
-	
+
 	@Test
 	@Order(5)
 	public void deleteBook() throws Exception {
-		//Implementare metodo delete
+		
+	    mvc.perform(MockMvcRequestBuilders.delete("/book/delete/{id}", 1))
+	            .andExpect(MockMvcResultMatchers.status().isOk());
+	    
 	}
 
 }
